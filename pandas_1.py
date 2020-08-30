@@ -1,8 +1,8 @@
 import pandas as pd
-import numpy as np
 
-#poke=pd.read_csv('pokemon_data.csv')
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
 
-#poke.drop('HP')
-
-print('hello py')
+df = pd.DataFrame(d)
+print(df[2:4])
+print(df)
