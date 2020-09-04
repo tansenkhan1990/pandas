@@ -26,6 +26,7 @@ class LinearRegressionModel(nn.Module):
         return out
 
 
+
 '''
 INSTANTIATE MODEL CLASS
 '''
