@@ -1,8 +1,33 @@
-import pandas as pd
+import torch
+import torch.nn as nn
+from torch.autograd import Variable
+import numpy as np
 
-d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
-   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+x_values = [i for i in range(11)]
+x_train = np.array(x_values, dtype=np.float32)
+x_train = x_train.reshape(-1, 1)
 
-df = pd.DataFrame(d)
-print(df[2:4])
-print(df)
+y_values = [2 * i + 1 for i in x_values]
+y_train = np.array(y_values, dtype=np.float32)
+y_train = y_train.reshape(-1, 1)
+
+'''
+CREATE MODEL CLASS
+'''
+
+
+class LinearRegressionModel(nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super(LinearRegressionModel, self).__init__()
+        self.linear = nn.Linear(input_dim, output_dim)
+
+    def forward(self, x):
+        out = self.linear(x)
+        return out
+
+
+'''
+INSTANTIATE MODEL CLASS
+'''
+input_dim = 1
+output_dim = 1
