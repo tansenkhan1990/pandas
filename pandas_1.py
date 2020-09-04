@@ -31,3 +31,63 @@ INSTANTIATE MODEL CLASS
 '''
 input_dim = 1
 output_dim = 1
+
+model = LinearRegressionModel(input_dim, output_dim)
+
+#######################
+#  USE GPU FOR MODEL  #
+#######################
+
+model.cuda()
+
+'''
+INSTANTIATE LOSS CLASS
+'''
+
+criterion = nn.MSELoss()
+
+'''
+INSTANTIATE OPTIMIZER CLASS
+'''
+
+learning_rate = 0.01
+
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
+
+'''
+TRAIN THE MODEL
+'''
+epochs = 100
+for epoch in range(epochs):
+    epoch += 1
+    # Convert numpy array to torch Variable
+
+    #######################
+    #  USE GPU FOR MODEL  #
+    #######################
+    if torch.cuda.is_available():
+        inputs = Variable(torch.from_numpy(x_train).cuda())
+
+    #######################
+    #  USE GPU FOR MODEL  #
+    #######################
+    if torch.cuda.is_available():
+        labels = Variable(torch.from_numpy(y_train).cuda())
+
+    # Clear gradients w.r.t. parameters
+    optimizer.zero_grad()
+
+    # Forward to get output
+    outputs = model(inputs)
+
+    # Calculate Loss
+    loss = criterion(outputs, labels)
+
+    # Getting gradients w.r.t. parameters
+    loss.backward()
+
+    # Updating parameters
+    optimizer.step()
+
+    # Logging
+    print('epoch {}, loss {}'.format(epoch, loss.data[0]))
